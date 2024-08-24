@@ -1,11 +1,12 @@
-#include <WiFi.h>  
+#include <ESP8266WiFi.h>  
 #include <PubSubClient.h>
 #include <DHTesp.h>
 
-const int DHT_PIN = 15;  
+
+const int DHT_PIN = 5;  
 DHTesp dht; 
-const char* ssid = "Wokwi-GUEST"; ///  wifi ssid 
-const char* password = "";
+const char* ssid = "VU TIEN MINH 2.4G"; ///  wifi ssid 
+const char* password = "haituan1979.@1980.@";
 const char* mqtt_server = "test.mosquitto.org";// mosquitto server url
 
 WiFiClient espClient;
@@ -45,7 +46,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
 void reconnect() { 
   while (!client.connected()) {
     Serial.print("Attempting MQTT connection...");
-    String clientId = "ESP32Client-";
+    String clientId = "ESP8266Client-";
     clientId += String(random(0xffff), HEX);
     if (client.connect(clientId.c_str())) {
       Serial.println("Connected");
@@ -64,7 +65,7 @@ void setup() {
   setup_wifi(); 
   client.setServer(mqtt_server, 1883);
   client.setCallback(callback); 
-  dht.setup(DHT_PIN, DHTesp::DHT22);
+  dht.setup(DHT_PIN, DHTesp::DHT11);
 }
 void loop() {
   if (!client.connected()) {
